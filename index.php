@@ -3,6 +3,7 @@
 /* 
  * Contrôleur frontal
  */
+session_start();
 
 // on essaye de se connecter
 try{
@@ -26,5 +27,14 @@ $twig = new Twig_Environment($loader/*, array(
 )*/);
 
 // récupération du contrôleur
-require_once 'c/ImagesController.php';
 
+if(isset($_POST["login"])&&isset($_POST["pwd"])){
+    require_once 'c/ConnectController.php';
+// si on est connecté
+}elseif(isset($_SESSION['laclef'])&& $_SESSION['laclef']==session_id()){
+    // on va sur le contrôleur de l'admin
+    require_once 'c/adminController.php';
+// on veut afficher un artiste grâce à son id
+}else{
+    require_once 'c/ImagesController.php';
+}
